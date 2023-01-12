@@ -1,38 +1,29 @@
-import itertools
+# prices of newspaper
+prices = {
+    'TOI': [3, 3, 3, 3, 3, 5, 6],
+    'Hindu': [2.5, 2.5, 2.5, 2.5, 2.5, 4, 4],
+    'ET': [4, 4, 4, 4, 4, 4, 10],
+    'BM': [1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5],
+    'HT': [2, 2, 2, 2, 2, 4, 4],
+}
 
-class News:
-    def _init_(self, name, daily_price):
-        self.name = name
-        self.daily_price = daily_price
-        self.weekly_price = daily_price * 7
+# calculate total cost for the week
+for key in prices:
+    prices[key] = sum(prices[key])
 
-    def _str_(self):
-        return f"{self.name}: INR {self.weekly_price}/week"
+papers = list(prices.keys())
 
-subscriptions = [
-    News("Times of India", 5),
-    News("Hindustan Times", 6),
-    News("Economic Times", 10),
-    News("The Hindu", 8)
-]
+amount = int(input())
 
-def get_combinations(subscriptions, budget, index=0):
-    if index == len(subscriptions):
-        return []
-    else:
-        current_sub = subscriptions[index]
-        combinations = []
-        for i in range(0, int(budget/current_sub.weekly_price) + 1):
-            for comb in get_combinations(subscriptions, budget - i*current_sub.weekly_price, index+1):
-                combinations.append([(current_sub, i)] + comb)
-        return combinations
+n = len(prices)
 
-def generate_combinations(subscriptions, budget):
-    all_combinations = get_combinations(subscriptions, budget)
-    valid_combinations = [comb for comb in all_combinations if sum(sub.weekly_price*count for sub, count in comb) <= budget]
-    return valid_combinations
+ans = []
 
-budget = int(input("Enter your weekly budget for subscriptions: "))
-combinations = generate_combinations(subscriptions, budget)
-for comb in combinations:
-    print(comb)
+# check all possible combinations
+for i in range(n):
+    for j in range(i+1, n):
+        if prices[papers[i]] + prices[papers[j]] <= amount:
+            ans.append({papers[i], papers[j]})
+        
+print(*ans)
+    
