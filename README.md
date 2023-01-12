@@ -1,6 +1,6 @@
 #prices of newspaper
 
-prices = {
+news = {
 
     'TOI': [3, 3, 3, 3, 3, 5, 6],
     
@@ -16,15 +16,15 @@ prices = {
 
 #calculate total cost for the week
 
-for key in prices:
+for key in news:
 
-    prices[key] = sum(prices[key])
+    news[key] = sum(news[key])
 
-papers = list(prices.keys())
+papers = list(news.keys())
 
 amount = int(input())
 
-n = len(prices)
+n = len(news)
 
 ans = []
 
@@ -34,7 +34,7 @@ for i in range(n):
 
     for j in range(i+1, n):
     
-        if prices[papers[i]] + prices[papers[j]] <= amount:
+        if news[papers[i]] + news[papers[j]] <= amount:
         
             ans.append({papers[i], papers[j]})
         
